@@ -79,9 +79,7 @@ def test_multithreaded_sharing():
             assert ii not in bf
             bf.add(ii)
             assert ii in bf
-            if ii % 100 == 0:
-                # every tenth iteration
-                bf.to_bytes()
+            bf._roundtrip()
 
     tpe = ThreadPoolExecutor(max_workers=n_threads)
 
