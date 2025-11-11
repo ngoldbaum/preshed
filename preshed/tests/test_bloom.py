@@ -81,10 +81,8 @@ def test_multithreaded_sharing():
             assert ii in bf
             bf._roundtrip()
 
-    tpe = ThreadPoolExecutor(max_workers=n_threads)
-
-    futures = []
-    for i, chunk in enumerate(chunks):
-        futures.append(tpe.submit(worker, chunk))
-
-    [f.result() for f in futures]
+    with ThreadPoolExecutor(max_workers=n_threads) as tpe:
+        futures = []
+        for i, chunk in enumerate(chunks):
+            futures.append(tpe.submit(worker, chunk))
+        [f.result() for f in futures]
